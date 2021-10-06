@@ -19,7 +19,7 @@ In the remote server in which you want to SSH/setup SSH.
 It might sound funny/confusing, but yes you need to access this system (i.e. login with SSH or user-password) and modify some files. Without this, you cannot proceed further.
 
 ```bash
-echo "PASTE CONTENTS OF id_rsa.pub FILE HERE" >> ~/.ssh/authorized_keys'
+echo "PASTE CONTENTS OF id_rsa.pub FILE HERE" >> ~/.ssh/authorized_keys
 ```
 Now everything is ready
 You can now ssh from your client to a remote machine with just one command. Replace `username` with your remote machine username and replace your IP address. 
