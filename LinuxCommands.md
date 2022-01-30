@@ -52,7 +52,7 @@ Su Mo Tu We Th Fr Sa
 23 24 25 26 27 28 29
 30 31
 ```
-![Calendar Output](./images/cal-command.png)
+![Calendar Output](./images/cal-command.PNG)
 ___
 #### push a command to background using &
 ___
@@ -119,7 +119,7 @@ ___
 ___
 #### tree .
 The `tree` command is used to get directory structure in the form of a tree. Paste output in your Github Readme to make your project directory easy to understand for a second person. 
-![tree](./images/tree-command.png)
+![tree](./images/tree-command.PNG)
 ___
 #### unmask
 ___
