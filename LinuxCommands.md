@@ -18,6 +18,7 @@ __________________
 #### cron cronjob crontab
 ___
 #### free
+![tree](./images/free.PNG)
 ___
 #### ps -a
 ___
@@ -89,7 +90,8 @@ ___
 #### rsync
 ___
 ###### What is dev/null?
-To understand easy, assume `dev/null` is a Black Hole. You can direct output of any commant is scripts to dev/null. It is very much used in scripts where you want to suppress errors. For example
+To understand easy, assume `dev/null` is a Black Hole. You can direct output of any commant is scripts to dev/null but it will not be saved anywhere and will not occupy any disk space.  
+Use case: If you direct the output of a script to a file then the error message wil be output to a file and your terminal will not show any error. So in our case `dev/null` as a file. A file that doesn't saves anything & doesn't occupies space, direct all spam and noise to this file.
 
 ___
 #### what is 2>&1
@@ -109,11 +111,22 @@ ___
 .bash_profile
 .bashrc
 ___
-#### word count: wc
+#### wc
+It is used to find out the number of word in a line. `wc` stands for word count.  
+  
+Default output gives `the number of lines`, `no of words`, `the number of characters in the file`
+![](./images/word-count.PNG)
+
 ___
 #### $env
 ___
 #### vmstat
+`vmstat` stands for Virtal Memory Statistics. It privides system information like memory, paging, processes, IO, CPU, and disk scheduling.
+```
+vmstat
+```
+
+![tree](./images/vmstat.PNG)
 ___
 #### htop
 ___
@@ -138,20 +151,38 @@ What is the shebang line in shell scripting?
 ___
 input.txt | python3 my-program.py > output.txt
 ___
-base64
+#### base64
+Linux Systems encode and decode data for I/O and data transmission. Please note that encoding and decoding are not similar to encryption and decryption.
+
+All linux systems use `base64` for encoding and decoding. base64 is used internally and in general purpose a user doesn't need to bother about it, but in some cases a developer might need to provide raw input to a file in such case we need to encode input and pass input. 
+  
+  To encode data:
+```
+echo  'A B C D' | base64
+```
+To decode data
+```
+echo  'QSBCIEMgRAo=' | base64 --decode
+```
+![base64 example](./images/base64.PNG)
 ___
 I want to read all input to the command from file1 direct all output to file2 and error to file 3, how can I achieve this command <file1 1>file2 2>file3
 awk
 ___
-#### df
-df -i to get available node number
+#### df -i
+Linux Systems recognizes file with Inode Numbers and not with names.  
+The no of available Inode Number gives the maximum number of files that can be accomodated in the disk or file system. 
+Use `df -i` to get available node number
+```
+df -i
+```
+![Availabe Inode Number](./images/available-inode-numbers.PNG)
 ___
 sticky bits in linux permission
 ___
 ###### What is return code in bash/shell scripts?
+There are 256 return codes ranging from 0 - 255
 Every Bash script has a return code. The code could be as follows:-
 0 for success  
-1 if no matches were f   &
-2 if the script throwed an error while executing  
+1 - 255 for different types error
 
-However there are 256 return codes ranging from 1 - 255
