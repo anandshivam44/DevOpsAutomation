@@ -53,12 +53,10 @@ ___
 ___
 #### chown
 ___
-#### top
-___
 #### uptime
 ___
 #### cal
-It gets calender of the current month in terminal. Use it to to save time.
+It gets calender of the current month in terminal.
 ```bash
 cal
 ```
@@ -74,20 +72,71 @@ Su Mo Tu We Th Fr Sa
 ```
 ![Calendar Output](./images/cal-command.PNG)
 ___
-#### push a command to background using &
-___
-#### bash vs shell
-___
 #### sleep
+Create a thread that does nothing for n seconds. Use it to create a delay in your shell script or start a useless process.
+```bash
+sleep 500
+```
+![sleep](./images/sleep.PNG)
 ___
-#### ssh
-ssh -i "public key.pem" ec2-user@3.51.32.0 if you ssh very frequently and do not want to use the -i command then follow https://github.com/anandshivam44/DevOpsAutomation/blob/main/GenerateKeysAndSSH.md
-___
-#### fg bg with Ctrl z
+###### run a command in background using '&'
+You can run a command line process in background by ending it with `&`
+```bash
+python3 program.py &
+```
+or
+```bash
+# Create a thread that does nothing for 500 seconds and send it to background
+sleep 500 &
+```
+![Background](./images/background.PNG)
 ___
 #### jobs
+The `jobs` commands keep a track of all the processes running in the background and foreground by the current user.
+![jobs](./images/jobs.PNG)
+___
+###### Ctrl + z
+Ctrl + z pauses/suspends a program. You can start the same program in foreground using `fg` command or you can run it in background using `bg` command.
+___
+#### fg
+`fg` stands for foreground. You can bring back a process in foreground that was running in background or you can resume a suspended process using `fg` command.  
+If there are multiple processes then you might want to pass parameters also like `fg 3` for third process.
+```bash
+fg
+```
+![fg](./images/fg.PNG)
+___
+#### bg
+`bg` stands for background. You can resume a suspended process in background using the bg command.  
+If there are multiple processes then you might want to pass parameters also like `bg 2` for second process. 
+```bash
+bg
+```
+![bg](./images/bg.PNG)
+___
+###### Difference between bash vs shell
+Bash is an extended form of shell. It has more features than shell like endless logs, better compatability with interactive tools like vim and nano.  
+bash is located in `/bin/bash` and shell is located at `/bin/sh`.
+___
+#### ssh
+SSH stands for Secure Shell Protocol is used to connect to remote hosts securely. It is some of the most used commands for people who engage themselves with cloud.
+``` bash
+# ssh -i /path/to/public_key_file [user]@[IP]
+
+ssh -i ./practise.pem ubuntu@3.91.160.159
+```
+if you ssh very frequently and do not want to use the -i command repeteadly then follow https://github.com/anandshivam44/DevOpsAutomation/blob/main/GenerateKeysAndSSH.md
+```bash
+ssh ubuntu@3.91.160.159
+``` 
+![ssh](./images/ssh.PNG)
 ___
 #### ping
+Ping is used to check the network connectivity to a specified address or IP.
+```
+ping github.com
+```
+![ssh](./images/ssh.PNG)
 ___
 #### kill
 ___
