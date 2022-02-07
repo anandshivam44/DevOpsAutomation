@@ -202,10 +202,17 @@ The `tree` command is used to get directory structure in the form of a tree. Pas
 ___
 #### unmask
 ___
+#### netstat -tulpn | grep LISTEN
+Use `netstat -tulpn | grep LISTEN` to get the list of all open ports. Helpful when working with docker images, port binding, deploying Restful APIs to get the ports that are already busy or to check which port you have deployed your API.
+```bash
 sudo netstat -tulpn | grep LISTEN
+```
+![netstat](./images/netstat.PNG)
 ___
 #### dmesg
+`dmesg` stands for driver message. It gets boot time logs. If your system faces a boot time error. You can read the logs and try to identify the error.
 Boot time logs: dmesg
+![dmesg](./images/dmesg.PNG)
 ___
 When you are working on servers there are no IDEs and you have to use `vim` or `nano` to edit a file. But if you want to just empty a file then the fastest way is
 ```bash
