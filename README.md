@@ -6,3 +6,4 @@ This repo contains files and scripts for IT automations and time optimizations f
 3. [Linux commands cheat sheet](https://github.com/anandshivam44/DevOpsAutomation/blob/main/LinuxCommands.md)
 4. [CloudFormation Get! & Ref! cheat sheet](https://github.com/anandshivam44/DevOpsAutomation/blob/main/CloudFormationRef%26GetAttCheatsheet.md)
 5. [Shutdown all EC2 VM periodically to save cost](https://github.com/anandshivam44/DevOpsAutomation/tree/main/ShutDownAllEC2EqualIntervalsOfTime)
+6. [Git Cheat Cheet](https://github.com/anandshivam44/DevOpsAutomation/blob/main/GitCheatSheet.md)
