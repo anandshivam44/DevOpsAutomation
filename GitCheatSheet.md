@@ -13,4 +13,6 @@ git reset --hard origin/BRANCH_NAME
 git branch -D BRANCH_NAME
 ```
  - Git create a branch from another branch
+```bash
 git checkout -b NEW_BRANCH_NAME SOURCE_BRANCH_NAME
+```
