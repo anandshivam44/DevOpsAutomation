@@ -16,3 +16,18 @@ git branch -D BRANCH_NAME
 ```bash
 git checkout -b NEW_BRANCH_NAME SOURCE_BRANCH_NAME
 ```
+ - Git rename a local branch
+ ```bash
+ git checkout OLD_BRANCH_NAME
+ ```
+ ```bash
+ git branch -m NEW_BRANCH_NAME
+ ```
+ `-m, --move            move/rename a branch and its reflog`
+ - Git rename a remote branch
+ ```
+ git push origin -u NEW_BRANCH_NAME
+ ```
+ ```
+ git push origin --delete OLD_BRANCH_NAME
+ ```
