@@ -1,4 +1,4 @@
-### AWS Cli Cheat Sheet  
+## AWS Cli Cheat Sheet  
 
 #### Replace a File in s3, from local to s3
 ```bash
@@ -30,4 +30,8 @@ $BUCKET_NAME="bucket-name"
 ```bash
 aws s3 rm s3://$BUCKET_NAME/ --recursive
 aws s3 rb s3://$BUCKET_NAME
+```
+#### Copy a folder from local repo to s3 bucket or s3 folder
+```bash
+ aws s3 cp $LOCAL_PATH\ s3://$BUCKET_NAME/folder1/folder2/ --recursive
 ```
