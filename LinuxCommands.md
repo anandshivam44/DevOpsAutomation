@@ -13,7 +13,7 @@ popd
 # Now you can go back again to folder-1 using
 popd
 ```
-`pushd` & `popd` are used when you are navigating FS and want to go back to your previous folder quickly.
+`pushd` & `popd` are used when you are navigating FS and want to go back to your previous folder quickly. It is conceptually a stack.
 __________________
 #### cron cronjob crontab
 ___
