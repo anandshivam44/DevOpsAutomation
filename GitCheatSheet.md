@@ -44,3 +44,7 @@ run: git rebase --continue
 ```bash
 git reset filename
 ```
+To unstag all changes use
+```bash
+git reset
+```
