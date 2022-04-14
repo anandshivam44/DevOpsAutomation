@@ -40,3 +40,7 @@ git commit --amend
 # remote: modify the commit message
 run: git rebase --continue
 ```
+ #### Mistakenly did a git add. To remove a file from staging area use
+```bash
+git reset filename
+```
