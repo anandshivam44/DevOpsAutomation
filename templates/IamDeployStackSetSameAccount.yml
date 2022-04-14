@@ -1,0 +1,58 @@
+# How to use this template
+# Use this template to use StackSet within the same account only
+# This template should be before using Stack Set as Stack Set will use the permissions for deploying the template
+# For multi-account multi-region refer
+# https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/stacksets-prereqs-self-managed.html#stacksets-prereqs-advanced-perms
+# Deploy only Once in an account
+# Once StackSet is created it is safe to delete these IAM Roles aka delete the template stack
+# Note: The role name used in this stack must be exact and should not be modified
+
+AWSTemplateFormatVersion: 2010-09-09
+Description: Configure the AWSCloudFormationStackSetAdministrationRole to enable use of AWS CloudFormation StackSets & Configure the AWSCloudFormationStackSetExecutionRole to enable use of your account as a target account in AWS CloudFormation StackSets
+
+Resources:
+  AdministrationRole:
+    Type: AWS::IAM::Role
+    Properties:
+    # Role must have the exact name
+      RoleName: AWSCloudFormationStackSetAdministrationRole
+      AssumeRolePolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: cloudformation.amazonaws.com
+            Action:
+              - sts:AssumeRole
+      Path: /
+      Policies:
+        - PolicyName: AssumeRole-AWSCloudFormationStackSetExecutionRole
+          PolicyDocument:
+            Version: 2012-10-17
+            Statement:
+              - Effect: Allow
+                Action:
+                  - sts:AssumeRole
+                Resource:
+                  - "arn:*:iam::*:role/AWSCloudFormationStackSetExecutionRole"
+
+  ExecutionRole:
+    Type: AWS::IAM::Role
+    DependsOn:
+      - AdministrationRole
+    Properties:
+    # Role must have the exact name
+      RoleName: AWSCloudFormationStackSetExecutionRole
+      AssumeRolePolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Effect: Allow
+            Principal:
+              AWS:
+                - !Ref "AWS::AccountId"
+            Action:
+              - sts:AssumeRole
+      Path: /
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/PowerUserAccess
+        # - arn:aws:iam::aws:policy/AdministratorAccess # use AdministratorAccess for creating IAM Roles
