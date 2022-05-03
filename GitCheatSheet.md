@@ -48,3 +48,11 @@ To unstag all changes use
 ```bash
 git reset
 ```
+#### Get `git diff` after it was staged using `git add`
+```bash
+git diff --staged
+```
+#### Remove a file from staging if it was added using `git add` / Undo `git add`
+```bash
+git restore --staged <file>
+```
