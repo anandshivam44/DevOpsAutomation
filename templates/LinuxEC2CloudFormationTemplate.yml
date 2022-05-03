@@ -1,0 +1,126 @@
+AWSTemplateFormatVersion: 2010-09-09
+Parameters:
+  InstanceTypeParameter:
+    Type: String
+    Default: t3a.medium
+    Description: Enter instance size. Default is t3a.medium.
+  # WorkstationIp:
+  #   Type: String
+  #   Description: The IP address of the workstation that can SSH into the instance.
+  AMI:
+    Type: String
+    Default: ami-08f3d892de259504d
+    Description: The Linux AMI to use.
+  Key:
+    Type: String
+    Description: The key used to access the instance.
+Resources:
+  VPC:
+    Type: AWS::EC2::VPC
+    Properties:
+      CidrBlock: 10.0.0.0/16
+      EnableDnsSupport: true
+      EnableDnsHostnames: true
+      InstanceTenancy: default
+      Tags:
+        - Key: Name
+          Value: Linux VPC
+  InternetGateway:
+    Type: AWS::EC2::InternetGateway
+  VPCGatewayAttachment:
+    Type: AWS::EC2::VPCGatewayAttachment
+    Properties:
+      VpcId: !Ref VPC
+      InternetGatewayId: !Ref InternetGateway
+  SubnetA:
+    Type: AWS::EC2::Subnet
+    Properties:
+      AvailabilityZone: ap-south-1a
+      VpcId: !Ref VPC
+      CidrBlock: 10.0.0.0/24
+      MapPublicIpOnLaunch: true
+  RouteTable:
+    Type: AWS::EC2::RouteTable
+    Properties:
+      VpcId: !Ref VPC
+  InternetRoute:
+    Type: AWS::EC2::Route
+    DependsOn: InternetGateway
+    Properties:
+      DestinationCidrBlock: 0.0.0.0/0
+      GatewayId: !Ref InternetGateway
+      RouteTableId: !Ref RouteTable
+  SubnetARouteTableAssociation:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      RouteTableId: !Ref RouteTable
+      SubnetId: !Ref SubnetA
+  InstanceSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupName: "Internet Group"
+      GroupDescription: "SSH and web traffic in, all traffic out."
+      VpcId: !Ref VPC
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: "22"
+          ToPort: "22"
+          CidrIp: 0.0.0.0/0
+      SecurityGroupEgress:
+        - IpProtocol: -1
+          CidrIp: 0.0.0.0/0
+  ElasticIP:
+    Type: AWS::EC2::EIP
+    Properties:
+      Domain: vpc
+      InstanceId: !Ref Linux
+  Linux:
+    Type: "AWS::EC2::Instance"
+    Properties:
+      SubnetId: !Ref SubnetA
+      ImageId: !Ref AMI
+      InstanceType:
+        Ref: InstanceTypeParameter
+      KeyName: !Ref Key
+      SecurityGroupIds:
+        - Ref: InstanceSecurityGroup
+      # BlockDeviceMappings:
+      #   - DeviceName: /dev/sda1
+      #     Ebs:
+      #       VolumeSize: 8
+      #       Encrypted: 'true'
+      # BlockDeviceMappings:
+      #   - DeviceName: /dev/sda1
+      #     Ebs:
+      #       VolumeSize: 8
+      Tags:
+        - Key: Appplication
+          Value: Linux Server
+        - Key: Domain
+          Value: None
+        - Key: Environment
+          Value: Test
+        - Key: LifeTime
+          Value: Transient
+        - Key: Name
+          Value: Linux Server
+        - Key: OS
+          Value: Linux
+        - Key: OwnerContact
+          Value: "@matthewcasperson"
+        - Key: Purpose
+          Value: Support Test Instance
+        - Key: Source
+          Value: CloudForation Script in Octopus Deploy
+      UserData:
+        Fn::Base64: |
+          #cloud-boothook
+          #!/bin/bash
+          echo "Hello World!"
+Outputs:
+  PublicIp:
+    Value:
+      Fn::GetAtt:
+        - Linux
+        - PublicIp
+    Description: Server's PublicIp Address
