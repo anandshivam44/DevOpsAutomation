@@ -56,3 +56,7 @@ git diff --staged
 ```bash
 git restore --staged <file>
 ```
+#### git checkout remote branch
+```bash
+git checout -b BRANCH_NAME origin/BRANCH_NAME 
+```
