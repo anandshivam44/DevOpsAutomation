@@ -23,7 +23,8 @@ You can even do the same step manually
 ![create_ami](./images/1_create_ami.png)
 ##### 2. Create a Copy of your AMI  
 
-AMi creation takes time. Once unencrypted AMI is created then create a copy of your AMI. While making a copy we have to enable encryption. Enabling Encryption in this stage is very important. All EBS ceated from an encrypted AMI wil always be encrypted.  
+AMi creation takes time. Once unencrypted AMI is created then create a copy of your AMI. While making a copy we have to enable encryption. Enabling Encryption in this stage is very important. All EBS ceated from an encrypted AMI wil always be encrypted. 
+For Encryption AWS will ask for KMS Key. You can leave all values to default and let AWS create and manage KMS Key for you.
 
 Below is a powershell command to do the same  
 
