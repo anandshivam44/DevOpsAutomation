@@ -71,3 +71,11 @@ git stash pop
 git reflog # check commits; you can also use git log
 git reset --hard commit_SHA
 ```
+#### git goback to previous commit (IMPORTANT: All changes will be discarded)
+```bash
+git reset --hard HEAD
+```
+#### git goback to (previous - 1 commit) (IMPORTANT: All changes will be discarded)
+```bash
+git reset --hard HEAD~1
+```
