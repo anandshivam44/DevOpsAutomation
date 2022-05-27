@@ -62,7 +62,13 @@ git checkout -b BRANCH_NAME origin/BRANCH_NAME
 ```
 #### git stash changes. By stashing changes you can change your current branch without having to worry about commiting changes in branch.
 ```bash
-git stash save
+git stash
+git checkout BRANCH
+git stash pop
+```
+#### git stash changes including untracked files. By stashing changes you can change your current branch without having to worry about commiting changes in branch.
+```bash
+git stash --include-untracked
 git checkout BRANCH
 git stash pop
 ```
