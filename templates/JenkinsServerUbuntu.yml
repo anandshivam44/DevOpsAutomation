@@ -1,0 +1,140 @@
+AWSTemplateFormatVersion: 2010-09-09
+Parameters:
+  InstanceCPUType:
+    Type: String
+    Default: t3a.medium
+    Description: Enter instance size. Default is t3a.medium
+    AllowedValues: [t2.nano, t2.micro, t2.small, t2.medium, t2.large, t2.xlarge, t2.2xlarge,
+      t3.nano, t3.micro, t3.small, t3.medium, t3a.medium,t3.large, t3.xlarge, t3.2xlarge,
+      m4.large, m4.xlarge, m4.2xlarge, m4.4xlarge, m4.10xlarge,
+      m5.large, m5.xlarge, m5.2xlarge, m5.4xlarge,
+      c5.large, c5.xlarge, c5.2xlarge, c5.4xlarge, c5.9xlarge,
+      g3.8xlarge,
+      r5.large, r5.xlarge, r5.2xlarge, r5.4xlarge, r3.12xlarge,
+      i3.xlarge, i3.2xlarge, i3.4xlarge, i3.8xlarge,
+      d2.xlarge, d2.2xlarge, d2.4xlarge, d2.8xlarge]
+    ConstraintDescription: must be a valid EC2 instance type.
+  AMI:
+    Description: The Linux AMI to use.
+    # Type:  'AWS::SSM::Parameter::Value<AWS::EC2::Image::Id>'
+    Type: String
+    Default: 'ami-052efd3df9dad4825'
+  Key:
+    Description: The key used to access the instance.
+    Type: AWS::EC2::KeyPair::KeyName
+    ConstraintDescription: must be the name of an existing EC2 KeyPair
+  UserID:
+    Description: Enter user ID from you s1 email id
+    Type: String
+  SubnetID:
+    Type: String
+    Description: The subnet ID of the Jenkins EC2 Instance
+  SecurityGroupID:
+    Type: String
+    Description: ID of the security group to attach to the Jenkins EC2 Instance
+  Environment:
+    Type: String
+    Description: ID of the security group to attach to the Jenkins EC2 Instance
+    AllowedValues: ['dev','qa' ,'prod' ]
+    Default: 'dev'
+Resources:
+  # VPC:
+  #   Type: AWS::EC2::VPC
+  #   Properties:
+  #     CidrBlock: 10.0.0.0/16
+  #     EnableDnsSupport: true
+  #     EnableDnsHostnames: true
+  #     InstanceTenancy: default
+  #     Tags:
+  #       - Key: Name
+  #         Value: Linux VPC
+  # InternetGateway:
+  #   Type: AWS::EC2::InternetGateway
+  # VPCGatewayAttachment:
+  #   Type: AWS::EC2::VPCGatewayAttachment
+  #   Properties:
+  #     VpcId: !Ref VPC
+  #     InternetGatewayId: !Ref InternetGateway
+  # SubnetA:
+  #   Type: AWS::EC2::Subnet
+  #   Properties:
+  #     AvailabilityZone: ap-south-1a
+  #     VpcId: !Ref VPC
+  #     CidrBlock: 10.0.0.0/24
+  #     MapPublicIpOnLaunch: true
+  # RouteTable:
+  #   Type: AWS::EC2::RouteTable
+  #   Properties:
+  #     VpcId: !Ref VPC
+  # InternetRoute:
+  #   Type: AWS::EC2::Route
+  #   DependsOn: InternetGateway
+  #   Properties:
+  #     DestinationCidrBlock: 0.0.0.0/0
+  #     GatewayId: !Ref InternetGateway
+  #     RouteTableId: !Ref RouteTable
+  # SubnetARouteTableAssociation:
+  #   Type: AWS::EC2::SubnetRouteTableAssociation
+  #   Properties:
+  #     RouteTableId: !Ref RouteTable
+  #     SubnetId: !Ref SubnetA
+  # InstanceSecurityGroup:
+  #   Type: AWS::EC2::SecurityGroup
+  #   Properties:
+  #     GroupName: "Internet Group"
+  #     GroupDescription: "SSH and web traffic in, all traffic out."
+  #     VpcId: !Ref VPC
+  #     SecurityGroupIngress:
+  #       - IpProtocol: tcp
+  #         FromPort: "22"
+  #         ToPort: "22"
+  #         CidrIp: 0.0.0.0/0
+  #     SecurityGroupEgress:
+  #       - IpProtocol: -1
+  #         CidrIp: 0.0.0.0/0
+  # ElasticIP:
+  #   Type: AWS::EC2::EIP
+  #   Properties:
+  #     Domain: vpc
+  #     InstanceId: !Ref Linux
+  Linux:
+    Type: "AWS::EC2::Instance"
+    Properties:
+      SubnetId: !Ref SubnetID
+      ImageId: !Ref AMI
+      InstanceType:
+        Ref: InstanceCPUType
+      KeyName: !Ref Key
+      SecurityGroupIds:
+        - Ref: SecurityGroupID
+      BlockDeviceMappings:
+        - DeviceName: /dev/sda1
+          Ebs:
+            VolumeSize: 16
+            Encrypted: 'true'
+      Tags:
+        - Key: Name
+          Value: jenkins-server
+        - Key: CreatedBy
+          Value: !Sub '${UserID}@sentinelone.com'
+        - Key: UserId
+          Value: !Join [ '', [ !Ref AWS::AccountId, ":",!Ref UserID, "@sentinelone.com"] ]
+        - Key: Environment
+          Value: !Ref Environment
+      UserData:
+        Fn::Base64: |
+          #!/bin/bash
+          sudo apt install openjdk-11-jdk -y
+          export JAVA_HOME=/usr/lib/jvm/openjdk-11
+          export PATH=$PATH:$JAVA_HOME/bin
+          echo "export JAVA_HOME=/usr/lib/jvm/openjdk-11" | sudo tee --append /etc/profile
+          echo "export PATH=\$PATH:\$JAVA_HOME/bin" | sudo tee --append /etc/profile
+          curl -fsSL https://pkg.jenkins.io/debian/jenkins.io.key | sudo tee /usr/share/keyrings/jenkins-keyring.asc > /dev/null
+          echo deb [signed-by=/usr/share/keyrings/jenkins-keyring.asc] https://pkg.jenkins.io/debian binary/ | sudo tee  /etc/apt/sources.list.d/jenkins.list > /dev/null
+          sudo apt-get update -y
+          sudo apt-get install jenkins -y
+          sudo systemctl start jenkins.service
+          sudo ufw allow 8080
+          sudo ufw allow OpenSSH
+          sudo ufw --force enable
+
