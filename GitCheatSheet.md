@@ -72,6 +72,10 @@ git stash --include-untracked
 git checkout BRANCH
 git stash pop
 ```
+#### Clear git stash
+```bash
+git stash clear
+```
 #### git goto to a particular commit
 ```bash
 git reflog # check commits; you can also use git log
