@@ -91,5 +91,5 @@ git reset --hard HEAD~1
 ```
 #### git check history of a file
 ```bash
-git log -p — filepath
+git log -p -- filepath
 ```
