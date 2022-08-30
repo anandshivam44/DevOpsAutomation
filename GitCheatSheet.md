@@ -93,3 +93,10 @@ git reset --hard HEAD~1
 ```bash
 git log -p -- filepath
 ```
+#### git bring changes from a specific commit from a specific repository into working repository
+use git log to get commit hash from the branch you branch you want to bring changes, then 
+```bash
+git checkout WORKING_BRANCH
+git cherry-pick <commit-hash>
+```
+Note: The new changes will be commited into the working branch
