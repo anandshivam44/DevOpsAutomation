@@ -81,6 +81,10 @@ git stash clear
 git reflog # check commits; you can also use git log
 git reset --hard commit_SHA
 ```
+#### git undo previous commit. This will undo the commit and remove changes from staging, but your previous commit file changes will not be lost
+```bash
+git reset HEAD~1
+```
 #### git goback to previous commit (IMPORTANT: All changes will be discarded)
 ```bash
 git reset --hard HEAD
