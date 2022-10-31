@@ -7,6 +7,11 @@ git fetch --all
 ```bash
 git reset --hard origin/BRANCH_NAME
 ```
+#### Squash previous N commits into 1
+```bash
+
+git reset --soft HEAD~3 &&
+git commit```
 
  #### Git forceful deletion of a branch without merging it
 ```bash
