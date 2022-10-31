@@ -11,7 +11,8 @@ git reset --hard origin/BRANCH_NAME
 ```bash
 
 git reset --soft HEAD~3 &&
-git commit```
+git commit
+```
 
  #### Git forceful deletion of a branch without merging it
 ```bash
