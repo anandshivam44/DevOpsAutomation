@@ -1,4 +1,4 @@
-## Important and Useful Linux Commands for Daily Life and Interviews
+## Important and Useful Linux Commands for Daily Life, Interviews and tricks
 
 __________________
 #### pushd popd dir
@@ -21,10 +21,37 @@ ___
 `free` command gives you details about the Primary Memory(RAM) and swap memory.
 ```bash
 free
+free -h # h for human readable
 ```
 ![tree](./images/free.PNG)
 ___
-#### ps -a
+#### ps 
+ps is Process Status
+ps command gives you the list of running process and their PID. ps command is non-interactive and can be used with shell scripts.
+```bash
+pa -A # Get all processes
+ps -a # get all processes not associated with a terminal
+ps -u # view processes along with their owner 
+ps -x #view process owned by current user(you)
+```
+___
+#### Difference between jobs, ps, top and htop
+jobs give the processes that is attached to the current terminal/shell.
+
+ps is non-interactive and can be used with shell scripts.
+
+top is interactive 
+
+htop is advanced form of top
+___
+#### difference vi and vim
+___
+#### Keep SSH session Alive
+Does your SSH session breaks?
+Here is a one time fix
+```bash
+ssh -o ServerAliveInterval=60 -i ~/path/key.cer  ubuntu@xx.xx.xxx.xx
+```
 ___
 #### top
 `top` is an interactive tool. It shows the processes running in your system. Along with it also shows hardware details like CPU usage, RAM Usage, swap memory usage and no of tasks running.
@@ -50,10 +77,21 @@ ___
 #### Ctrl + Left Arrow Ctrl + Right Arrow
 ___
 #### chmod
+chmod is change mode.chmod command is used to change the permission of a file. It can change read, write and execute permission of user, group and others. 
+```bash
+chmox +x file.sh # Add execute permission to a file
+```
 ___
 #### chown
+chown command is used to change the owner of a file
+Example: If in a system there are users say Rick and Morty. Morty created a file and he is the owner. Now to change the owner to Rick you would do
+```bash
+chown Rick filename.txt
+```
 ___
 #### uptime
+It gives how long the systemhas been running.
+![uptime](./images/uptime.PNG)
 ___
 #### cal
 It gets calender of the current month in terminal.
@@ -92,7 +130,7 @@ sleep 500 &
 ![Background](./images/background.PNG)
 ___
 #### jobs
-The `jobs` commands keep a track of all the processes running in the background and foreground by the current user.
+The `jobs` commands keep a track of all the processes running in the background and foreground by shell.
 ![jobs](./images/jobs.PNG)
 ___
 ###### Ctrl + z
@@ -139,23 +177,68 @@ ping github.com
 ![ssh](./images/ssh.PNG)
 ___
 #### kill
+It is used to terminate or kill a process manually.
+Example: You get PID of a process via `ps -A` command and you terminate the process by
+```bash
+kill PID
+```
 ___
 #### du -sh /var/log/* du -sh /var/log/
+```bash
+```
 ___
 #### grep 
 grep -nr 'anand.shivam44' anandshivam44.github.io/ to find a particular word in complete folder
 ___
-#### free
-___
+
 #### pkill
+pkill command is used to kill a process by it name or partial name and not by its PID number
+Example: There is a pyhton program running. You can terminate it by
+```bash
+pkill python
+```
 ___
 #### sed
+sed stands for stream editor. It is mostly used to find a replace a word or regex pattern in a file without opening it in any editor like nano, vim, vi. It can also do tasks like insertion, deletion and searching based on regex patterns.
+Example: replace all unix in a file with linux
+```bash 
  sed 's/unix/linux/g' geekfile.txt
+```
+`s`: substitute
+`g`: do the operation globally
 ___
 #### soft link ln -s
+Softlinks are like Desktop shortcuts you had in your Windows PC. They point to a file. They just store the path of another file and pretend to behaves like the original file but they aren't.  
+Softlinks are called symbolic links. size of a softlink is in bytes or KB because they just store path of a file. If you delete the actual file in the disk then the softlink file will be pointing to null(nothing) and will have no relevance.
+
+```bash
+# ln -s {source-filename} {symbolic-filename}
+ln -s file1 shortcut_file
+```
+___
 #### hard link ln
+Every file in linux has a inode number. This inode number points to an object in teh disk. When you see a file in file explorer. It is just pointing to the object using its Inode Number.
+When you create a hard link, you can see another that points to the same object using the same inode number. Both the files are same just different representation. Both file show the same content. If one of them is deleted the other file remains.
+
+Size of a hard link is the actual size of the file because it points to inode number object in the disk
+
+```bash
+# ln {original-filename} {hardlink-filename}
+ln file1 shortcut_file
+```
 ___
 #### rsync
+rsync is remote synchronization. Used to sync files between two remote directories. It can also be used to copy files in your local machine.
+
+It is very useful when you are copying a very large folder. Iven if copying breaks in between you can re-run the rsync command and locially it will be like a resume feature.
+
+```bash
+rsync ~/local-file.txt user@remote-host:~/remote-file.txt
+
+rsync -vh ~/local-folder user@remote-host:~/remote-folder
+
+rsync -vh ~/local-folder-1 ~/local-folder-2
+```
 ___
 ###### What is dev/null?
 To understand easy, assume `dev/null` is a Black Hole. You can direct output of any commant is scripts to dev/null but it will not be saved anywhere and will not occupy any disk space.  
@@ -163,6 +246,13 @@ Use case: If you direct the output of a script to a file then the error message 
 
 ___
 #### what is 2>&1
+We use `2>&1` in the end of bash or shell commands/scripts to redirect the stderr to stdout. Descriptor 1 stands for standard output and descriptor 2 stands for standard output. It is used to supress error by showing it in output and avoid breaking of our script.
+```bash
+cp abcd.txt ./not-a-folder 2>&1
+```
+Below the difference between both the return value is that the first one is an error while the second value is an output
+![2_1](./images/2_1.PNG)
+
 ___
 #### curl ifconfig.me
 ```bash
@@ -172,21 +262,51 @@ It is used to get your current IPv4
 ![IPv4](./images/curl_ifconfig.PNG)
 ___
 #### ifconfig
+Full form of ifconfig is Interface Configuration.
+It is used to get and change the network configuaration of the system.  
+In the below we can see that our internal ip of the system is 172.31.84.251
+```bash
+sudo apt install net-tools
+ipconfig
+```
+![ifconfig](./images/ifconfig.PNG)
 ___
-#### netstat
-Listening Port: netstat -ntlp
-___
+For Bash
 .bash_profile
 .bashrc
+For mac zsh
+.zprofile
+.zshrc
 ___
 #### wc
 It is used to find out the number of word in a line. `wc` stands for word count.  
   
 Default output gives `the number of lines`, `no of words`, `the number of characters in the file`
+```bash
+```
 ![](./images/word-count.PNG)
-
 ___
-#### $env
+
+#### nohup
+nohup is `No hangup`
+nohup gives the best way to run a process in background.  
+it allows to runa  process in background even if the terminal session is closed or SSH tunnel breaks.
+Example: you have a shell script `my-script.sh` which you want to run in the background
+```bash
+# nohup ANY_BASH_COMMAND &
+nohup sh my-script.sh & # run a program in background
+nohup sh my-script.sh > output.log & # run a program in background and send output to a file
+```
+nohup makes running commands over SSH connections reliable. Imagine you ran a critical shell script and the connection breaks and your script didn't complete. 
+___
+___
+___
+#### env
+It is used to print all BASH environment variables
+```bash
+env
+```
+![](./images/env.PNG)
 ___
 #### vmstat
 `vmstat` stands for Virtal Memory Statistics. It privides system information like memory, paging, processes, IO, CPU, and disk scheduling.
@@ -200,7 +320,9 @@ ___
 The `tree` command is used to get directory structure in the form of a tree. Paste output in your Github Readme to make your project directory easy to understand for a second person. 
 ![tree](./images/tree-command.PNG)
 ___
-#### unmask
+#### umask
+umask command is used to set the default permission for new files. The default mask for a non-root user is 002, changing the folder permissions to 775 (777-002=775 rwxrwxr-x), and file permissions to (666-002=664)664 (rw-rw-r--)
+![umask](./images/umask.PNG)
 ___
 #### netstat -tulpn | grep LISTEN
 Use `netstat -tulpn | grep LISTEN` to get the list of all open ports. Helpful when working with docker images, port binding, deploying Restful APIs to get the ports that are already busy or to check which port you have deployed your API.
@@ -219,10 +341,59 @@ When you are working on servers there are no IDEs and you have to use `vim` or `
 echo "" > file.txt
 ```
 using vim and nano in this situation could be tidious.
+
 ___
 What is the shebang line in shell scripting?
+Scripring can be done using python, shell, BASH, perl etc. No you can define at the start of a script file which interpreter or command to use to run the file.  
+
+Example Bash scripts can have this at the start of the file to specify the path of bash to use.
+```bash
+#!/bin/bash
+.
+.
+.
+commands..
+.
+.
+.
+```
+or
+```bash
+#!/usr/bin/bash
+```
+or
+```bash
+#!/usr/bin/env bash
+```
+shell can have
+```sh
+#!/bin/sh
+```
+or
+```sh
+#!/usr/bin/sh
+```
+python
+```python
+#!/usr/bin/python
+```
+or a specific version of python
+```python
+#!/usr/bin/python3.9
+```
+ruby
+```ruby
+#!/usr/bin/ruby
+```
+PHP
+```php
+#!/usr/local/bin/php
+```
 ___
 input.txt | python3 my-program.py > output.txt
+Helpful for competetive programmers. Helpful when taking large inputs and giving out large outputs.
+```bash
+```
 ___
 #### base64
 Linux Systems encode and decode data for I/O and data transmission. Please note that encoding and decoding are not similar to encryption and decryption.
@@ -251,11 +422,26 @@ df -i
 ```
 ![Availabe Inode Number](./images/available-inode-numbers.PNG)
 ___
-sticky bits in linux permission
+#### sticky bits in linux permission
+sticky bits are useful there is a shared folder for multiple user/groups. Sticky bit will restrict deleting a file create by a user A by another user B and vice versa.
+```bash
+chmod +t folder_name
+```
+___
+#### find
+```bash
+```
 ___
 ###### What is return code in bash/shell scripts?
 There are 256 return codes ranging from 0 - 255
 Every Bash script has a return code. The code could be as follows:-
 0 for success  
 1 - 255 for different types error
+
+##### Difference between /bin/sh /bin/bash
+ sh/Shell is an interface between the User and Linux Kernel. Bash is just Shell with more features. Bash is the default Scripting Tool provided in most linux terminal.
+ Bash is located at `/bin/bash` and shell at `/bin/sh`. To run a command with shell explicitly you would use
+ ```bash
+ /bin/sh shell-script.sh
+ ```
 
