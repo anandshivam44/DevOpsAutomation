@@ -1,5 +1,9 @@
 ## AWS Cli Cheat Sheet  
-
+#### Quick create a bucket
+```bash
+BUCKET_NAME=my-bucket-$(date +%s)
+aws s3 mb $BUCKET_NAME
+```
 #### Replace a File in s3, from local to s3
 ```bash
 aws s3 cp C:\Users\sanand\filename.ext s3://bucket-name/path/filename.ext
