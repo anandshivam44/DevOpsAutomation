@@ -1,6 +1,7 @@
 ## Kubernetes Cluster using kubeadm
 
---> Check connectivity between master and slave
+##### --> 
+Check connectivity between master and slave
 ```bash
 ping IP
 ```
