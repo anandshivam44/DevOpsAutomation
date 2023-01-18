@@ -58,6 +58,12 @@ git reset
 ```bash
 git diff --staged
 ```
+#### How can I purge all the history and push it
+```bash
+git checkout --orphan <name_you_choose_for_orphan_branch>
+git commit
+git push <remote-name> <branch-name>
+```
 #### Remove a file from staging if it was added using `git add` / Undo `git add`
 ```bash
 git restore --staged <file>
