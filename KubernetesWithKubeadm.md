@@ -8,7 +8,8 @@ ping IP
 Disable swap
 ```bash
 sudo swapoff -a  
-free -H
+cat /proc/meminfo | grep 'SwapTotal'
+free -h
 ```
 prepare
 ```bash
@@ -36,6 +37,7 @@ sudo ufw default allow outgoing
 sudo ufw allow ssh
 sudo ufw allow 6443
 sudo ufw allow 2379:2380/tcp
+sudo ufw allow 30000:32768/tcp
 sudo ufw allow 10250
 sudo ufw allow 10259
 sudo ufw allow 10257
@@ -47,6 +49,7 @@ On Worker node(s) [relavent ports](https://kubernetes.io/docs/reference/networki
 ```bash
 netstat -lntu
 ss -lntu
+
 sudo apt install ufw
 sudo ufw default allow outgoing
 sudo ufw allow ssh
@@ -72,6 +75,7 @@ echo "export PATH=$PATH:/usr/local/go/bin" >> ~/.profile
 source ~/.profile 
 go version
 ```
+Compile and install `cri-dockerd`
 ##### --> 
 [Forwarding IPv4 and letting iptables see bridged traffic](https://kubernetes.io/docs/setup/production-environment/container-runtimes/#forwarding-ipv4-and-letting-iptables-see-bridged-traffic)
 ##### --> 
@@ -102,7 +106,17 @@ kubectl get pods -A
 ```
 ```bash
 kubectl get pods -A --watch
+kubectl get namespaces
+kubectl get all -n kube-system
 ```
+##### --> 
+On the Worker Node
+* Install docker and `docker-cri`
+* Install kubeadm, kubelet and kubectl
+```bash
+sudo kubeadm join IP:6443 --token TOKEN --discovery-token-ca-cert-hash CERT --cri-socket=unix:///var/run/cri-dockerd.sock
+```
+Dont forget to pass `--cri-socket=unix:///var/run/cri-dockerd.sock`
 ##### --> More References
 
 [kubeadm join after link is expired](https://stackoverflow.com/questions/40009831/cant-find-kubeadm-token-after-initializing-master)
