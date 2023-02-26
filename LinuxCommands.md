@@ -16,6 +16,18 @@ popd
 `pushd` & `popd` are used when you are navigating FS and want to go back to your previous folder quickly. It is conceptually a stack.
 __________________
 #### cron cronjob crontab
+Cron is a system to schedule and automate a task. Say you want to run a program every 5 minutes you can do it using cron.  
+
+Cronjob is the actual task defined in the system. While cron can be thought of as a concept/program, cronjob is the actual entry in the system that will do the work. 
+
+Crontab is a table that is defined in a file. This file contains list of all jobs.  
+```bash
+crontab -e # edit file to add cron jobs
+crontab -l # list all automated jobs
+```
+![cron](./images/cron0.png)
+![cron](./images/cron1.png)
+![cron](./images/cron2.png)
 ___
 #### free
 `free` command gives you details about the Primary Memory(RAM) and swap memory.
@@ -23,7 +35,7 @@ ___
 free
 free -h # h for human readable
 ```
-![tree](./images/free.PNG)
+![tree](./images/free.png)
 ___
 #### ps 
 ps is Process Status
@@ -34,6 +46,10 @@ ps -a # get all processes not associated with a terminal
 ps -u # view processes along with their owner 
 ps -x #view process owned by current user(you)
 ```
+```bash
+ps -aux 
+```
+![tree](./images/ps.png)
 ___
 #### Difference between jobs, ps, top and htop
 jobs give the processes that is attached to the current terminal/shell.
@@ -45,6 +61,7 @@ top is interactive
 htop is advanced form of top
 ___
 #### difference vi and vim
+vim is vi improved. Both of them are text editors. Vim is an extended form of vim with more functionalities. Example vim supports multi level undo and redo.
 ___
 #### Keep SSH session Alive
 Does your SSH session breaks?
@@ -58,12 +75,12 @@ ___
 ```bash
 top
 ```
-![tree](./images/top.PNG)
+![tree](./images/top.png)
 ___
 #### htop
 `htop` is a similar tool like `top` with some more features added like colors, bars etc.  
 It is an interactive tool. 
-![tree](./images/htop.PNG)
+![tree](./images/htop.png)
 ```bash
 htop
 ```
@@ -72,9 +89,8 @@ ___
 `Anacron` is related to `cron` but has a lot of differences. Anacron is used to schedule tasks. It has an advantage over cron, it can run tasks even after the system was shut down, the next time systems starts. It has an disadvantage over cron. Its time granularity is low. Cron has accuracy in minutes but anacron has accuracy in days.  
 Use case: You might want to cackup your local favourite folder to cloud, you are not in a hurry if your backup is done a few hours later or tomorrow.
 ___
-#### Ctrl +r
-___
-#### Ctrl + Left Arrow Ctrl + Right Arrow
+#### Ctrl + r (Windows and Linux)
+Ctrl+R: Recall the last command matching the characters you provide. It will search BASH/sh history with the matching works you type. Helps save a lot of time and you should definitely learn to use it.
 ___
 #### chmod
 chmod is change mode.chmod command is used to change the permission of a file. It can change read, write and execute permission of user, group and others. 
@@ -88,10 +104,11 @@ Example: If in a system there are users say Rick and Morty. Morty created a file
 ```bash
 chown Rick filename.txt
 ```
+![tree](./images/chown.png)
 ___
 #### uptime
 It gives how long the systemhas been running.
-![uptime](./images/uptime.PNG)
+![uptime](./images/uptime.png)
 ___
 #### cal
 It gets calender of the current month in terminal.
@@ -108,14 +125,14 @@ Su Mo Tu We Th Fr Sa
 23 24 25 26 27 28 29
 30 31
 ```
-![Calendar Output](./images/cal-command.PNG)
+![Calendar Output](./images/cal-command.png)
 ___
 #### sleep
 Create a thread that does nothing for n seconds. Use it to create a delay in your shell script or start a useless process.
 ```bash
 sleep 500
 ```
-![sleep](./images/sleep.PNG)
+![sleep](./images/sleep.png)
 ___
 ###### run a command in background using '&'
 You can run a command line process in background by ending it with `&`
@@ -127,11 +144,11 @@ or
 # Create a thread that does nothing for 500 seconds and send it to background
 sleep 500 &
 ```
-![Background](./images/background.PNG)
+![Background](./images/background.png)
 ___
 #### jobs
 The `jobs` commands keep a track of all the processes running in the background and foreground by shell.
-![jobs](./images/jobs.PNG)
+![jobs](./images/jobs.png)
 ___
 ###### Ctrl + z
 Ctrl + z pauses/suspends a program. You can start the same program in foreground using `fg` command or you can run it in background using `bg` command.
@@ -142,7 +159,7 @@ If there are multiple processes then you might want to pass parameters also like
 ```bash
 fg
 ```
-![fg](./images/fg.PNG)
+![fg](./images/fg.png)
 ___
 #### bg
 `bg` stands for background. You can resume a suspended process in background using the bg command.  
@@ -150,7 +167,7 @@ If there are multiple processes then you might want to pass parameters also like
 ```bash
 bg
 ```
-![bg](./images/bg.PNG)
+![bg](./images/bg.png)
 ___
 ###### Difference between bash vs shell
 Bash is an extended form of shell. It has more features than shell like endless logs, better compatability with interactive tools like vim and nano.  
@@ -167,14 +184,14 @@ if you ssh very frequently and do not want to use the -i command repeteadly then
 ```bash
 ssh ubuntu@3.91.160.159
 ``` 
-![ssh](./images/ssh.PNG)
+![ssh](./images/ssh.png)
 ___
 #### ping
 Ping is used to check the network connectivity to a specified address or IP.
 ```
 ping github.com
 ```
-![ssh](./images/ssh.PNG)
+![ssh](./images/ssh.png)
 ___
 #### kill
 It is used to terminate or kill a process manually.
@@ -183,12 +200,26 @@ Example: You get PID of a process via `ps -A` command and you terminate the proc
 kill PID
 ```
 ___
-#### du -sh /var/log/* du -sh /var/log/
+#### du -sh /var/
+gives the disk space occupied by a directory in human readable format
 ```bash
+du -sh /var/
 ```
+![du](./images/du.png)
 ___
 #### grep 
-grep -nr 'anand.shivam44' anandshivam44.github.io/ to find a particular word in complete folder
+It is a very popular command in linux. This command is used to search for a text/pattern in a command output or text/pattern in a file.
+Example: To find in history all the chmod command you used.
+```bash
+#pipe the output of history command to grep which will search for sed commands.
+history | grep sed
+```
+![grep1](./images/grep1.png)
+```bash
+#find all process associates with python
+ps -aux | grep python
+```
+![grep2](./images/grep2.png)
 ___
 
 #### pkill
@@ -202,10 +233,11 @@ ___
 sed stands for stream editor. It is mostly used to find a replace a word or regex pattern in a file without opening it in any editor like nano, vim, vi. It can also do tasks like insertion, deletion and searching based on regex patterns.
 Example: replace all unix in a file with linux
 ```bash 
- sed 's/unix/linux/g' geekfile.txt
+ sed -i 's/unix/linux/g' geekfile.txt
 ```
 `s`: substitute
 `g`: do the operation globally
+![sed](./images/sed.png)
 ___
 #### soft link ln -s
 Softlinks are like Desktop shortcuts you had in your Windows PC. They point to a file. They just store the path of another file and pretend to behaves like the original file but they aren't.  
@@ -251,7 +283,7 @@ We use `2>&1` in the end of bash or shell commands/scripts to redirect the stder
 cp abcd.txt ./not-a-folder 2>&1
 ```
 Below the difference between both the return value is that the first one is an error while the second value is an output
-![2_1](./images/2_1.PNG)
+![2_1](./images/2_1.png)
 
 ___
 #### curl ifconfig.me
@@ -259,7 +291,7 @@ ___
 curl ifconfig.me
 ```
 It is used to get your current IPv4
-![IPv4](./images/curl_ifconfig.PNG)
+![IPv4](./images/curl_ifconfig.png)
 ___
 #### ifconfig
 Full form of ifconfig is Interface Configuration.
@@ -269,22 +301,23 @@ In the below we can see that our internal ip of the system is 172.31.84.251
 sudo apt install net-tools
 ipconfig
 ```
-![ifconfig](./images/ifconfig.PNG)
+![ifconfig](./images/ifconfig.png)
 ___
-For Bash
-.bash_profile
-.bashrc
-For mac zsh
-.zprofile
-.zshrc
+#### Difference between .bash_profile & .bashrc
+
+`.bash_profile` is a hidden file which always executes when a user open a new shell/BASH session but it doesn't execute when a shell script is invoked by another process  
+
+`.bashrc` is a hidden file. It always executes when an interactive or non-interactive shell session starts.
+
+
+Similarly for mac users we have `.zprofile` `.zshrc` with same behaviour.
 ___
 #### wc
 It is used to find out the number of word in a line. `wc` stands for word count.  
   
 Default output gives `the number of lines`, `no of words`, `the number of characters in the file`
-```bash
-```
-![](./images/word-count.PNG)
+
+![](./images/word-count.png)
 ___
 
 #### nohup
@@ -306,7 +339,7 @@ It is used to print all BASH environment variables
 ```bash
 env
 ```
-![](./images/env.PNG)
+![](./images/env.png)
 ___
 #### vmstat
 `vmstat` stands for Virtal Memory Statistics. It privides system information like memory, paging, processes, IO, CPU, and disk scheduling.
@@ -314,28 +347,29 @@ ___
 vmstat
 ```
 
-![tree](./images/vmstat.PNG)
+![tree](./images/vmstat.png)
 ___
 #### tree .
 The `tree` command is used to get directory structure in the form of a tree. Paste output in your Github Readme to make your project directory easy to understand for a second person. 
-![tree](./images/tree-command.PNG)
+![tree](./images/tree-command.png)
 ___
 #### umask
 umask command is used to set the default permission for new files. The default mask for a non-root user is 002, changing the folder permissions to 775 (777-002=775 rwxrwxr-x), and file permissions to (666-002=664)664 (rw-rw-r--)
-![umask](./images/umask.PNG)
+![umask](./images/umask.png)
 ___
 #### netstat -tulpn | grep LISTEN
 Use `netstat -tulpn | grep LISTEN` to get the list of all open ports. Helpful when working with docker images, port binding, deploying Restful APIs to get the ports that are already busy or to check which port you have deployed your API.
 ```bash
 sudo netstat -tulpn | grep LISTEN
 ```
-![netstat](./images/netstat.PNG)
+![netstat](./images/netstat.png)
 ___
 #### dmesg
 `dmesg` stands for driver message. It gets boot time logs. If your system faces a boot time error. You can read the logs and try to identify the error.
 Boot time logs: dmesg
-![dmesg](./images/dmesg.PNG)
+![dmesg](./images/dmesg.png)
 ___
+#### Empty a file fast
 When you are working on servers there are no IDEs and you have to use `vim` or `nano` to edit a file. But if you want to just empty a file then the fastest way is
 ```bash
 echo "" > file.txt
@@ -343,8 +377,9 @@ echo "" > file.txt
 using vim and nano in this situation could be tidious.
 
 ___
+
 What is the shebang line in shell scripting?
-Scripring can be done using python, shell, BASH, perl etc. No you can define at the start of a script file which interpreter or command to use to run the file.  
+Scripring can be done using python, shell, BASH, perl etc. Now you can define at the start of a script file which interpreter or command to use to run the file.  
 
 Example Bash scripts can have this at the start of the file to specify the path of bash to use.
 ```bash
@@ -390,10 +425,12 @@ PHP
 #!/usr/local/bin/php
 ```
 ___
-input.txt | python3 my-program.py > output.txt
-Helpful for competetive programmers. Helpful when taking large inputs and giving out large outputs.
+#### Read input from a file and print output to a file
+You can pass input to a file and then print the output from the program to a file. Helpful when you have large outputs or large outputs and want to run programs faster.
 ```bash
+cat input.txt | python3 my-program.py > output.txt
 ```
+
 ___
 #### base64
 Linux Systems encode and decode data for I/O and data transmission. Please note that encoding and decoding are not similar to encryption and decryption.
@@ -408,10 +445,7 @@ To decode data
 ```bash
 echo  'QSBCIEMgRAo=' | base64 --decode
 ```
-![base64 example](./images/base64.PNG)
-___
-I want to read all input to the command from file1 direct all output to file2 and error to file 3, how can I achieve this command <file1 1>file2 2>file3
-awk
+![base64 example](./images/base64.png)
 ___
 #### df -i
 Linux Systems recognizes file with Inode Numbers and not with names.  
@@ -420,10 +454,10 @@ Use `df -i` to get available node number
 ```bash
 df -i
 ```
-![Availabe Inode Number](./images/available-inode-numbers.PNG)
+![Availabe Inode Number](./images/available-inode-numbers.png)
 ___
 #### sticky bits in linux permission
-sticky bits are useful there is a shared folder for multiple user/groups. Sticky bit will restrict deleting a file create by a user A by another user B and vice versa.
+sticky bits are useful when there is a shared folder for multiple user/groups. Sticky bit will restrict deleting a file create by a user A by another user B and vice versa.
 ```bash
 chmod +t folder_name
 ```

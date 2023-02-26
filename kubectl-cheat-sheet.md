@@ -3,6 +3,8 @@
 #### Create a yaml file to get started
 ```bash
 kubectl run redis --image=redis --dry-run=client -o yaml > redis-definition.yaml
+kubectl get events -o wide
+kebectl get po -o wide
 ```
 #### Create pod and expose with service of type ClusterIp
 ```bash
@@ -130,3 +132,137 @@ kubectl label nodes node-name key=value
 kubectl get daemonsets
 kubectl describe daemonsets monitoring-daemon
 ```
+#### Static Pods
+```bash
+ps -aux | grep kube # then look for --client 
+path /etc/kubernetes/manifests
+```
+#### Basic monitoring
+```bash
+kubectl top node
+kubectl top pod
+kubectl top pod --sort-by='cpu' --no-headers | tail -1
+```
+#### Basic Logging
+```bash
+kubectl logs pod-name
+kubectl logs pod-name -c container-name
+```
+#### Rollout and Rollback
+```bash
+kubectl rollout status deployment/myapp
+kubectl rollout history deployment/myapp
+kubectl rollout undo deployment/myapp
+kubectl get replicasets
+```
+#### ConfigMaps
+```bash
+kubectl get configmap
+kubectl get cm
+kubectl describe configmaps db-config
+kubectl create configmap webapp-config-map --from-literal=APP_COLOR=darkblue
+kubectl create configmap webapp-config-map --from-literal=APP_COLOR=darkblue --from-literal=APP_BACKGROUND=pink 
+```
+#### ConfigMaps
+```bash
+echo -n "mysql" | base64
+echo -n "bx1cZax=" | base64 --decode
+
+kubectl get secrets
+kubectl describe secrets
+kubectl describe secrets db-config
+kubectl create secret generic webapp-config-map --from-literal=APP_COLOR=darkblue
+kubectl create secret generic webapp-config-map --from-literal=APP_COLOR=darkblue --from-literal=APP_BACKGROUND=pink 
+```
+#### execute commands
+```bash
+kubectl exec -it pod-name -- cat /log/app.log
+```
+#### Os Upgrades % Cluster Upgrade
+```bash
+kubectl drain node01 --ignore-daemonsets #take out all pods in node so that node can go down for maintainance
+kubectl uncordon node01 #bring back node
+kubectl cordon node01 #do not create new pods 
+
+# Upgrade cluster
+kubectl cordon controlplane
+apt-get update
+kubeadm upgrade plan 
+https://kubernetes.io/docs/tasks/administer-cluster/kubeadm/kubeadm-upgrade/
+apt-mark unhold kubeadm &&  apt-get update && apt-get install -y kubeadm=1.26.1-00 &&  apt-mark hold kubeadm
+kubeadm upgrade node # only for worker nodes
+kubeadm upgrade plan
+kubeadm upgrade apply v1.26.0
+apt search kubelet
+apt upgrade kubelet=1.26.1-00
+k get no
+systemctl daemon-reload
+systemctl restart kubelet
+k get no
+kubectl uncordon controlplane
+```
+
+#### Backup
+```bash
+kubectl get all --all-namespaces -0 yaml > all-deploy-services.yaml
+
+etcdctl --version
+kubectl get po -n=kube-system
+kubectl describe pod etcd-controlplane -n kube-system
+
+
+export ETCDCTL_API=3 # when working with etcdctl
+etcdctl snapshot save -h
+
+
+
+kubectl -n kube-system describe pod etcd-controlplane | grep '\--listen-client-urls'      --listen-client-urls=https://127.0.0.1:2379,https://192.50.67.3:2379
+
+
+ETCDCTL_API=3 etcdctl --endpoints=https://[127.0.0.1]:2379 \
+--cacert=/etc/kubernetes/pki/etcd/ca.crt \
+--cert=/etc/kubernetes/pki/etcd/server.crt \
+--key=/etc/kubernetes/pki/etcd/server.key \
+snapshot save /opt/snapshot-pre-boot.db
+
+
+
+ETCDCTL_API=3 etcdctl  --data-dir /var/lib/etcd-from-backup \
+snapshot restore /opt/snapshot-pre-boot.db
+
+watch "crictl ps | grep etcd"
+
+
+
+
+etcdctl snapshot restore -h
+
+
+```
+
+
+#### cluster config
+```bash
+kubectl config get-clusters
+kubectl config use-context cluster1    
+```
+
+#### Certificate Signing Request CSR
+```bash
+kubectl get csr
+kubectl certificate approve <username>  
+kubectl get csr <username> -o yaml
+kubectl certificate deny <username>
+kubectl delete csr agent-smith
+```
+#### Config, user , permissions
+```bash
+kubectl config current-context --kubeconfig my-kube-config
+kubectl config --kubeconfig=/root/my-kube-config use-context research
+kubectl config --kubeconfig=/root/my-kube-config current-context
+```
+
+
+
+
+
