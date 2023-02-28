@@ -1,6 +1,51 @@
-## Important and Useful Linux Commands for Daily Life, Interviews and tricks
+## Linux Command for Intermediate - Revision for Interviews
 
 __________________
+#### tree
+`tree` 
+```bash
+sudo snap install tree
+tree .
+```
+Output
+```
+.
+├── a
+│   └── b
+│       └── c
+│           └── d
+├── file.txt
+├── input.txt
+└── snap
+    └── tree
+        ├── 18
+        ├── common
+        └── current -> 18
+```
+![tree](images/tree.png)
+___
+#### curl ifconfig.me
+```bash
+curl ifconfig.me
+```
+It is used to get your current IPv4
+![IPv4](images/curl_ifconfig.png)
+___
+#### top
+`top` is an interactive tool. It shows the processes running in your system. Along with it also shows hardware details like CPU usage, RAM Usage, swap memory usage and no of tasks running.
+```bash
+top
+```
+![top](images/top.png)
+___
+#### htop
+`htop` is a similar tool like `top` with some more features added like colors, bars etc.  
+It is an interactive tool. 
+![htop](images/htop.png)
+```bash
+htop
+```
+___
 #### pushd popd dir
 pushd and popd both are a combination of commands that are used to navigate file-system very similar to cd command. Their special feature is that they can store your paths in a stack
 ```bash
@@ -14,6 +59,7 @@ popd
 popd
 ```
 `pushd` & `popd` are used when you are navigating FS and want to go back to your previous folder quickly. It is conceptually a stack.
+![pushd](images/pushd.png)
 __________________
 #### cron cronjob crontab
 Cron is a system to schedule and automate a task. Say you want to run a program every 5 minutes you can do it using cron.  
@@ -69,21 +115,7 @@ Here is a one time fix
 ```bash
 ssh -o ServerAliveInterval=60 -i ~/path/key.cer  ubuntu@xx.xx.xxx.xx
 ```
-___
-#### top
-`top` is an interactive tool. It shows the processes running in your system. Along with it also shows hardware details like CPU usage, RAM Usage, swap memory usage and no of tasks running.
-```bash
-top
-```
-![top](images/top.png)
-___
-#### htop
-`htop` is a similar tool like `top` with some more features added like colors, bars etc.  
-It is an interactive tool. 
-![htop](images/htop.png)
-```bash
-htop
-```
+
 ___
 #### anacron
 `Anacron` is related to `cron` but has a lot of differences. Anacron is used to schedule tasks. It has an advantage over cron, it can run tasks even after the system was shut down, the next time systems starts. It has an disadvantage over cron. Its time granularity is low. Cron has accuracy in minutes but anacron has accuracy in days.  
@@ -93,10 +125,12 @@ ___
 Ctrl+R: Recall the last command matching the characters you provide. It will search BASH/sh history with the matching works you type. Helps save a lot of time and you should definitely learn to use it.
 ___
 #### chmod
-chmod is change mode.chmod command is used to change the permission of a file. It can change read, write and execute permission of user, group and others. 
+chmod is change mode.chmod command is used to change the permission of a file. It can change read, write and execute permission of user, group and others.   
+chmod and chown are very important and requires a learning and practice.
 ```bash
 chmox +x file.sh # Add execute permission to a file
 ```
+![chmod](images/chmod.png)
 ___
 #### chown
 chown command is used to change the owner of a file
@@ -285,13 +319,7 @@ cp abcd.txt ./not-a-folder 2>&1
 Below the difference between both the return value is that the first one is an error while the second value is an output
 ![2_1](images/2_1.png)
 
-___
-#### curl ifconfig.me
-```bash
-curl ifconfig.me
-```
-It is used to get your current IPv4
-![IPv4](images/curl_ifconfig.png)
+
 ___
 #### ifconfig
 Full form of ifconfig is Interface Configuration.
@@ -331,8 +359,6 @@ nohup sh my-script.sh & # run a program in background
 nohup sh my-script.sh > output.log & # run a program in background and send output to a file
 ```
 nohup makes running commands over SSH connections reliable. Imagine you ran a critical shell script and the connection breaks and your script didn't complete. 
-___
-___
 ___
 #### env
 It is used to print all BASH environment variables
@@ -378,7 +404,7 @@ using vim and nano in this situation could be tidious.
 
 ___
 
-What is the shebang line in shell scripting?
+#### What is the shebang line in shell scripting?
 Scripring can be done using python, shell, BASH, perl etc. Now you can define at the start of a script file which interpreter or command to use to run the file.  
 
 Example Bash scripts can have this at the start of the file to specify the path of bash to use.
@@ -463,7 +489,15 @@ chmod +t folder_name
 ```
 ___
 #### find
+find command is used to find files or patterns inside file.   
+Example you want to find a file name 'image.png'
 ```bash
+find . -name image.png
+```
+![find](images/find.png)
+Example 2: you want to find a text inside all files in a folder
+```bash
+find . -name '*.txt' -exec grep -i 'string to search for' {} \; -print
 ```
 ___
 ###### What is return code in bash/shell scripts?
