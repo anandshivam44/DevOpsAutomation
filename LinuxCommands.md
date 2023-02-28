@@ -2,7 +2,7 @@
 
 __________________
 #### tree
-`tree` 
+`tree` command shows the directory structure in a tree format. Very useful for visualization.
 ```bash
 sudo snap install tree
 tree .
@@ -32,7 +32,7 @@ It is used to get your current IPv4
 ![IPv4](images/curl_ifconfig.png)
 ___
 #### top
-`top` is an interactive tool. It shows the processes running in your system. Along with it also shows hardware details like CPU usage, RAM Usage, swap memory usage and no of tasks running.
+`top` is an interactive tool. It shows the processes running in your system. It also shows hardware details like CPU usage, RAM Usage, swap memory usage, and no of tasks running.
 ```bash
 top
 ```
