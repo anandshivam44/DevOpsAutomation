@@ -125,3 +125,7 @@ git checkout WORKING_BRANCH
 git cherry-pick <commit-hash>
 ```
 Note: The new changes will be commited into the working branch
+#### git cherry pick without commit 
+```bash
+git cherry-pick -n <hash>
+```
