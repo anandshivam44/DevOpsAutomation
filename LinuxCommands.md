@@ -120,9 +120,7 @@ ___
 #### anacron
 `Anacron` is related to `cron` but has a lot of differences. Anacron is used to schedule tasks. It has an advantage over cron, it can run tasks even after the system was shut down, the next time system starts. It has a disadvantage over cron. Its time granularity is low. Cron has accuracy in minutes but anacron has accuracy in days.  
 Use case: You might want to back up your favourite local folder to the cloud, you are not in a hurry if your backup is done a few hours later or tomorrow.
-___
-#### Ctrl + r (Windows and Linux)
-Ctrl+R: Recall the last command matching the characters you provide. It will search BASH/sh history with the matching works you type. Helps save a lot of time and you should definitely learn to use it.
+
 ___
 #### chmod
 chmod is change mode. chmod command is used to change the permission of a file. It can change the read, write and execute permission of users, groups and others.   
@@ -306,9 +304,9 @@ rsync -vh ~/local-folder user@remote-host:~/remote-folder
 rsync -vh ~/local-folder-1 ~/local-folder-2
 ```
 ___
-###### What is dev/null?
-To understand easily, assume `dev/null` is a Black Hole. You can direct the output of any command in scripts to dev/null but it will not be saved anywhere and will not occupy any disk space.  
-Use case: If you direct the output of a script to a file then the error message will be output to a file and your terminal will not show any error. So in our case `dev/null` is a file. A file that doesn't save anything & doesn't occupies space directs all spam and noise to this file.
+###### What is /dev/null?
+To understand easily, assume `/dev/null` is a Black Hole. You can direct the output of any command in scripts to dev/null but it will not be saved anywhere and will not occupy any disk space.  
+Use case: If you direct the output of a script to a file then the error message will be output to a file and your terminal will not show any error. So in our case `/dev/null` is a file. A file that doesn't save anything & doesn't occupies space directs all spam and noise to this file.
 
 ___
 #### what is 2>&1
@@ -512,4 +510,7 @@ Every Bash script has a return code. The code could be as follows:-
  ```bash
  /bin/sh shell-script.sh
  ```
+ ___
+#### Ctrl + r (Windows and Linux)
+Ctrl+R: Recall the last command matching the characters you provide. It will search BASH/sh history with the matching works you type. Helps save a lot of time and you should definitely learn to use it.
 

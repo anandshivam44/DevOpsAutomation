@@ -262,7 +262,43 @@ kubectl config --kubeconfig=/root/my-kube-config use-context research
 kubectl config --kubeconfig=/root/my-kube-config current-context
 ```
 
+#### Authorization
+```bash
+kubectl get roles
+kubectl get rolebindings
+kubectl describe role developer
+kubectl describe rolebindings <developer-role-binding>
 
+# check if you have access
+kubectl auth can-i create deployment
+kubectl auth can-i delete nodes
+
+kubectl auth can-i create deployment --as dev-user
+kubectl auth can-i delete nodes --as dev-user
+
+kubectl create role developer --namespace=default --verb=list,create,delete --resource=pods
+kubectl create rolebinding dev-user-binding --namespace=default --role=developer --user=dev-user
+
+kubectl create role developer --namespace=default --verb=list,create,delete --resource=pods --dry-run=client -o yaml > lab1.yml
+kubectl create rolebinding dev-user-binding --namespace=default --role=developer --user=dev-user  --dry-run=client -o yaml > lab2.yml
+
+kubectl  edit role developer -n blue
+
+```
+
+#### Namespace
+```bash
+kubectl api-resources --namespaced=true
+kubectl api-resources --namespaced=false
+```
+
+#### Service Account
+```bash
+kubectl create serviceaccount dashboard-sa
+kubectl get serviceaccount 
+kubectl describe serviceaccount dashboard-sa
+kubectl describe secret dashboard-sa-token
+```
 
 
 
