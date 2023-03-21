@@ -75,6 +75,12 @@ git restore --staged <file>
 ```bash
 git checkout -b BRANCH_NAME origin/BRANCH_NAME 
 ```
+#### git link and sync all remote branch to local branch
+```bash
+git branch -r | grep -v '\->' | sed "s,\x1B\[[0-9;]*[a-zA-Z],,g" | while read remote; do git branch --track "${remote#origin/}" "$remote"; done
+git pull --all
+```
+also check this [link](https://stackoverflow.com/questions/10312521/how-do-i-fetch-all-git-branches)
 #### git stash changes. By stashing changes you can change your current branch without having to worry about commiting changes in branch.
 ```bash
 git stash
@@ -119,3 +125,7 @@ git checkout WORKING_BRANCH
 git cherry-pick <commit-hash>
 ```
 Note: The new changes will be commited into the working branch
+#### git cherry pick without commit 
+```bash
+git cherry-pick -n <hash>
+```
